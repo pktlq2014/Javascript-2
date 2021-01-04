@@ -49,7 +49,8 @@ class UI {
     }
 
     deleteContact(target) {
-
+        // cha của btn xóa là thẻ td, cha của td là thẻ tr -> xóa toàn bộ tr đi
+        console.log(target.parentElement.parentElement);
         target.parentElement.parentElement.remove();
         //Remove from LS
         Store.removeContact(target.parentElement.parentElement.children[2].textContent);
@@ -72,6 +73,10 @@ class UI {
     searchName(text) {
         const rows = document.querySelectorAll('#contact-list tr');
         rows.forEach(function (row) {
+            // chạy hết all dữ liệu
+            // childrent[1] là cột email, 0 là name
+            // row.children[0] là thằng con đầu tiên của tr
+            // mỗi vòng for chạy 1 dòng lấy data cột name ra so sánh
             if (row.children[0].textContent.indexOf(text) != -1) {
                 row.style.display = 'table-row';
             } else {
@@ -164,12 +169,12 @@ document.getElementById('contact-form').addEventListener('submit', function (e) 
     }
 });
 
-// X Button Event
+// bắt event click cho thằng cha
 document.getElementById('contact-list').addEventListener('click', function (e) {
 
     // Instantiate UI
     const ui = new UI();
-
+    // khi click vào thằng con nào chứa class delete
     if (e.target.classList.contains('delete')) {
 
         if (confirm('Are you sure?')) {
